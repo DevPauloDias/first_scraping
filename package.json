@@ -1,5 +1,11 @@
 {
   "dependencies": {
     "puppeteer": "^20.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5",
+    "tsc": "^2.0.4",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
   }
 }

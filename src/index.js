@@ -2,7 +2,7 @@ const pup = require('puppeteer')
 
 const url = 'https://www.mercadolivre.com.br';
 
-const searchFor = "macbook";
+const searchFor = "dell";
 
 
 (async ()=>{
@@ -22,36 +22,39 @@ const searchFor = "macbook";
         await page.click('.nav-search-btn')
     ])
 
-   // ui-search-result-image__element shops__image-element
-    const links = await page.$$eval('.ui-search-result_image__element > a', el => el.map(link => link.href))
+
+    const links = await page.$$eval('.ui-search-link', el => el.map(link => link.href))
     let cont=1;
     let list = []
-    console.log(links)
+    console.log('Links -- ',links)
 
     for(const link of links){
 
         console.log('Page - ', cont);
         await page.goto(link)
-        await page.waitForSelector('.ui-pdp-title');
+        await page.waitForSelector('.nav-header')
+
+        console.log('achou o seletor');
  
-        const title = await page.$eval('.ui-pdp-title', element => element.innerText);
+        //const title = await page.$eval('.ui-pdp-title', element => element.innerText);
 
-        const price = await page.$eval('.andes-money-amount_fraction', element => element.innerText);
+    //     const price = await page.$eval('.andes-money-amount_fraction', element => element.innerText);
 
-        const seller = await page.evaluate(()=>{
-            const el = document.querySelector('ui-pdp-seller_link-trgger');
-            if(!el) return null
-            return el.innerText
-        });
+    //     const seller = await page.evaluate(()=>{
+    //         const el = document.querySelector('ui-pdp-seller_link-trgger');
+    //         if(!el) return null
+    //         return el.innerText
+    //     });
 
-        const obj = {}
-        obj.title = title;
-        obj.price = price;
-        (seller ? obj.seller = seller : '')
-        obj.link = link;
+    //     const obj = {}
+    //     obj.title = title;
+    //     obj.price = price;
+    //     (seller ? obj.seller = seller : '')
+    //     obj.link = link;
 
-        list.push(obj)
-        cont ++
+    //     list.push(obj)
+    //    console.log(title)
+         cont ++
     }
     console.log(list)
 
